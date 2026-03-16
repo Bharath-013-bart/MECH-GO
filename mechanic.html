@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MECH-GO | Mechanic Dashboard</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="top-bar">
+    <div class="logo">
+      <span class="logo-mark">⛽</span>
+      <span class="logo-text">MECH-<span>GO</span></span>
+    </div>
+    <nav class="nav-links">
+      <button id="homeBtn" class="nav-link-btn active">Available Requests</button>
+      <button id="activeBtn" class="nav-link-btn">Currently Working</button>
+      <button id="completedBtn" class="nav-link-btn">Completed</button>
+      <button id="earningsBtn" class="nav-link-btn">Earnings</button>
+      <button id="profileBtn" class="nav-link-btn">Profile</button>
+    </nav>
+    <div class="auth-buttons">
+      <span id="verificationBadge" class="badge-status hidden">⏳ Pending Verification</span>
+      <span id="userGreeting" class="user-greeting"></span>
+      <button id="logoutBtn" class="btn ghost small">Logout</button>
+    </div>
+  </header>
+
+  <main class="app-main">
+    <!-- Available Requests Section -->
+    <section id="homeSection" class="app-section">
+      <div class="section-header">
+        <h1>Available Service Requests</h1>
+        <div class="toggle-group">
+          <button id="toggleOnline" class="btn primary">Go Online</button>
+          <span id="statusBadge" class="badge offline">Offline</span>
+        </div>
+      </div>
+
+      <div class="mechanic-filters">
+        <label>
+          Filter by issue type:
+          <select id="issueFilter">
+            <option value="">All Types</option>
+            <option value="won't-start">Won't Start</option>
+            <option value="battery">Battery / Jump Start</option>
+            <option value="tyre">Puncture / Tyre Issue</option>
+            <option value="overheat">Overheating</option>
+            <option value="other">Other</option>
+          </select>
+        </label>
+      </div>
+
+      <div id="availableRequestsList" class="requests-list mechanic-requests">
+        <div class="empty-state">Go online to see available repair requests in your area</div>
+      </div>
+    </section>
+
+    <!-- Currently Working Section -->
+    <section id="activeSection" class="app-section hidden">
+      <div class="section-header">
+        <h1>Currently Working</h1>
+      </div>
+
+      <div class="active-job-container">
+        <div class="panel">
+          <h2>Customer Details</h2>
+          <div id="activeJobDetails" class="job-details large">
+            <div class="empty-state">No active job. Accept one from available requests to start.</div>
+          </div>
+        </div>
+
+        <div class="panel">
+          <h2>Quote & Billing</h2>
+          <form id="quoteForm" class="quote-form">
+            <label>
+              Service Description
+              <textarea id="serviceDesc" rows="3" placeholder="Describe the work you've done..."></textarea>
+            </label>
+
+            <div class="form-row">
+              <label>
+                Parts Cost (₹)
+                <input type="number" id="partsCost" min="0" step="10" placeholder="0" />
+              </label>
+              <label>
+                Labor Cost (₹)
+                <input type="number" id="laborCost" min="0" step="10" placeholder="0" />
+              </label>
+            </div>
+
+            <label>
+              Additional Charges (₹)
+              <input type="number" id="additionalCost" min="0" step="10" placeholder="0" />
+            </label>
+
+            <div class="total-section">
+              <h3>Total Amount Due: ₹<span id="totalAmount">0</span></h3>
+            </div>
+
+            <label class="checkbox-label">
+              <input type="checkbox" id="workCompleted" />
+              <span>Mark work as completed</span>
+            </label>
+
+            <button class="btn primary full" type="submit">Send Quote to Customer</button>
+          </form>
+        </div>
+
+        <div class="panel chat-panel">
+          <div class="chat-header">
+            <h3>Chat with Customer</h3>
+            <span id="chatStatus" class="badge offline">Offline</span>
+          </div>
+          <div id="chatMessages" class="chat-messages"></div>
+          <form id="chatForm" class="chat-input-row">
+            <input type="text" id="chatInput" placeholder="Type a message..." autocomplete="off" />
+            <button class="btn primary small" type="submit">Send</button>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <!-- Completed Jobs Section -->
+    <section id="completedSection" class="app-section hidden">
+      <div class="section-header">
+        <h1>Completed Jobs</h1>
+      </div>
+
+      <div class="panel">
+        <div id="completedJobsList" class="jobs-list">
+          <div class="empty-state">No completed jobs yet.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Earnings Section -->
+    <section id="earningsSection" class="app-section hidden">
+      <div class="section-header">
+        <h1>Earnings & Performance</h1>
+      </div>
+
+      <div class="earnings-grid">
+        <div class="stat-card">
+          <h3>Today's Earnings</h3>
+          <div class="stat-value">₹<span id="todayEarnings">0</span></div>
+          <p class="stat-label"><span id="todayJobs">0</span> jobs completed</p>
+        </div>
+        <div class="stat-card">
+          <h3>Monthly Earnings</h3>
+          <div class="stat-value">₹<span id="monthEarnings">0</span></div>
+          <p class="stat-label"><span id="monthJobs">0</span> jobs completed</p>
+        </div>
+        <div class="stat-card">
+          <h3>Your Rating</h3>
+          <div class="stat-value"><span id="rating">4.9</span> ⭐</div>
+          <p class="stat-label"><span id="ratingCount">87</span> customers rated</p>
+        </div>
+        <div class="stat-card">
+          <h3>Acceptance Rate</h3>
+          <div class="stat-value"><span id="acceptanceRate">98</span>%</div>
+          <p class="stat-label">Excellent performance</p>
+        </div>
+      </div>
+
+      <div class="panel">
+        <h2>Recent Transactions</h2>
+        <div id="earningsBreakdown" class="earnings-table">
+          <div class="empty-state">No completed jobs yet. Start accepting requests to track earnings.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Profile Section -->
+    <section id="profileSection" class="app-section hidden">
+      <div class="section-header">
+        <h1>Mechanic Profile</h1>
+      </div>
+
+      <div class="panel profile-panel">
+        <h2>Professional Information</h2>
+        <div class="profile-info">
+          <div class="info-row">
+            <label>Full Name</label>
+            <span id="profileName"></span>
+          </div>
+          <div class="info-row">
+            <label>Phone</label>
+            <span id="profilePhone"></span>
+          </div>
+          <div class="info-row">
+            <label>Specializations</label>
+            <span id="profileSpecializations"></span>
+          </div>
+          <div class="info-row">
+            <label>Member Since</label>
+            <span id="profileSince"></span>
+          </div>
+          <div class="info-row">
+            <label>Total Jobs Completed</label>
+            <span id="profileJobs"></span>
+          </div>
+        </div>
+
+        <div style="margin-top: 2rem; border-top: 1px solid rgba(148, 163, 199, 0.3); padding-top: 2rem;">
+          <h3>Certifications & Documents</h3>
+          <div class="document-list">
+            <div class="doc-item">
+              <span>🪪 ID Proof</span>
+              <span class="badge verified">Verified</span>
+            </div>
+            <div class="doc-item">
+              <span>📜 Technical Certificate</span>
+              <span class="badge verified">Verified</span>
+            </div>
+            <div class="doc-item">
+              <span>✓ Background Check</span>
+              <span class="badge verified">Verified</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel">
+        <h2>Account Settings</h2>
+        <label class="toggle-setting">
+          <span>Enable notifications</span>
+          <input type="checkbox" id="notificationsToggle" checked />
+        </label>
+        <label class="toggle-setting">
+          <span>Auto-accept requests</span>
+          <input type="checkbox" id="autoAcceptToggle" />
+        </label>
+      </div>
+    </section>
+  </main>
+
+  <!-- Auth Modal -->
+  <div class="modal-backdrop" id="authModal">
+    <div class="modal">
+      <button class="modal-close" id="authClose">&times;</button>
+      <h2>Login as Mechanic</h2>
+      <p class="modal-subtitle">Enter phone number to continue</p>
+      <form id="authForm" class="form">
+        <label>
+          Phone Number
+          <input type="tel" id="authPhone" required placeholder="+91 98765 43210" />
+        </label>
+        <button class="btn primary full" type="submit">Continue</button>
+      </form>
+      <p class="form-note">Need to verify? <a href="mechanic-verify.html">Start Verification</a></p>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <p>© <span id="year"></span> MECH-GO. All rights reserved.</p>
+  </footer>
+
+  <!-- Firebase SDK -->
+  <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-firestore-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-storage-compat.js"></script>
+
+  <!-- Config & Services -->
+  <script src="config.js"></script>
+  <script src="firebase-service.js"></script>
+  <script src="firestore-integration.js"></script>
+  <script>
+    // Wait for Firebase SDK to load from CDN before initializing
+    document.addEventListener('DOMContentLoaded', () => {
+      // Give Firebase CDN scripts time to load
+      setTimeout(() => {
+        if (typeof initializeFirebase === 'function') {
+          try {
+            initializeFirebase();
+          } catch (err) {
+            console.warn('Firebase initialization: ', err.message);
+          }
+        }
+      }, 500);
+    });
+  </script>
+
+  <!-- App -->
+  <script src="navigation.js"></script>
+  <script src="shared.js"></script>
+  <script src="mechanic.js"></script>
+</body>
+</html>

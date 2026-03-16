@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MECH-GO | Driver Dashboard</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="top-bar">
+    <div class="logo">
+      <span class="logo-mark">⛽</span>
+      <span class="logo-text">MECH-<span>GO</span></span>
+    </div>
+    <nav class="nav-links">
+      <button id="homeBtn" class="nav-link-btn active">Available Orders</button>
+      <button id="activeBtn" class="nav-link-btn">Currently Active</button>
+      <button id="earningsBtn" class="nav-link-btn">Earnings</button>
+      <button id="profileBtn" class="nav-link-btn">Profile</button>
+    </nav>
+    <div class="auth-buttons">
+      <span id="verificationBadge" class="badge-status hidden">⏳ Pending Verification</span>
+      <span id="userGreeting" class="user-greeting"></span>
+      <button id="logoutBtn" class="btn ghost small">Logout</button>
+    </div>
+  </header>
+
+  <main class="app-main">
+    <!-- Available Orders Section -->
+    <section id="homeSection" class="app-section">
+      <div class="section-header">
+        <h1>Available Orders</h1>
+        <div class="toggle-group">
+          <button id="toggleOnline" class="btn primary">Go Online</button>
+          <span id="statusBadge" class="badge offline">Offline</span>
+        </div>
+      </div>
+
+      <div class="driver-filters">
+        <label>
+          Filter by fuel type:
+          <select id="fuelFilter">
+            <option value="">All Types</option>
+            <option value="petrol">Petrol</option>
+            <option value="diesel">Diesel</option>
+          </select>
+        </label>
+      </div>
+
+      <div id="availableOrdersList" class="orders-list driver-orders">
+        <div class="empty-state">Go online to see available orders in your area</div>
+      </div>
+    </section>
+
+    <!-- Currently Active Section -->
+    <section id="activeSection" class="app-section hidden">
+      <div class="section-header">
+        <h1>Currently Active</h1>
+      </div>
+
+      <div class="active-order-container">
+        <div class="panel">
+          <h2>Order Details</h2>
+          <div id="activeOrderDetails" class="order-details large">
+            <div class="empty-state">No active order. Accept one from available orders to start.</div>
+          </div>
+        </div>
+
+        <div class="panel">
+          <h2>Delivery Status</h2>
+          <div class="status-controls">
+            <button class="status-btn" data-status="picked-up">
+              <span class="icon">📍</span>
+              <span>Picked Up</span>
+            </button>
+            <button class="status-btn" data-status="on-the-way">
+              <span class="icon">🚗</span>
+              <span>On the Way</span>
+            </button>
+            <button class="status-btn" data-status="arrived">
+              <span class="icon">✓</span>
+              <span>Arrived</span>
+            </button>
+            <button class="status-btn" data-status="completed">
+              <span class="icon">✓✓</span>
+              <span>Completed</span>
+            </button>
+          </div>
+
+          <div id="locationMap" class="location-preview">
+            <p>📍 Customer location will appear here</p>
+          </div>
+        </div>
+
+        <div class="panel chat-panel">
+          <div class="chat-header">
+            <h3>Chat with Customer</h3>
+            <span id="chatStatus" class="badge offline">Offline</span>
+          </div>
+          <div id="chatMessages" class="chat-messages"></div>
+          <form id="chatForm" class="chat-input-row">
+            <input type="text" id="chatInput" placeholder="Type a message..." autocomplete="off" />
+            <button class="btn primary small" type="submit">Send</button>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <!-- Earnings Section -->
+    <section id="earningsSection" class="app-section hidden">
+      <div class="section-header">
+        <h1>Earnings & Performance</h1>
+      </div>
+
+      <div class="earnings-grid">
+        <div class="stat-card">
+          <h3>Today's Earnings</h3>
+          <div class="stat-value">₹<span id="todayEarnings">0</span></div>
+          <p class="stat-label"><span id="todayOrders">0</span> orders completed</p>
+        </div>
+        <div class="stat-card">
+          <h3>Weekly Earnings</h3>
+          <div class="stat-value">₹<span id="weekEarnings">0</span></div>
+          <p class="stat-label"><span id="weekOrders">0</span> orders completed</p>
+        </div>
+        <div class="stat-card">
+          <h3>Your Rating</h3>
+          <div class="stat-value"><span id="rating">4.8</span> ⭐</div>
+          <p class="stat-label"><span id="ratingCount">120</span> customers rated</p>
+        </div>
+        <div class="stat-card">
+          <h3>Acceptance Rate</h3>
+          <div class="stat-value"><span id="acceptanceRate">95</span>%</div>
+          <p class="stat-label">Keep it high for better orders</p>
+        </div>
+      </div>
+
+      <div class="panel">
+        <h2>Earnings Breakdown</h2>
+        <div id="earningsBreakdown" class="earnings-table">
+          <div class="empty-state">No completed orders yet. Start accepting orders to track earnings.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Profile Section -->
+    <section id="profileSection" class="app-section hidden">
+      <div class="section-header">
+        <h1>Driver Profile</h1>
+      </div>
+
+      <div class="panel profile-panel">
+        <h2>Personal Information</h2>
+        <div class="profile-info">
+          <div class="info-row">
+            <label>Full Name</label>
+            <span id="profileName"></span>
+          </div>
+          <div class="info-row">
+            <label>Phone</label>
+            <span id="profilePhone"></span>
+          </div>
+          <div class="info-row">
+            <label>Member Since</label>
+            <span id="profileSince"></span>
+          </div>
+        </div>
+
+        <div style="margin-top: 2rem; border-top: 1px solid rgba(148, 163, 199, 0.3); padding-top: 2rem;">
+          <h3>Documents</h3>
+          <div class="document-list">
+            <div class="doc-item">
+              <span>🪪 License</span>
+              <span class="badge verified">Verified</span>
+            </div>
+            <div class="doc-item">
+              <span>🚗 Vehicle Registration</span>
+              <span class="badge verified">Verified</span>
+            </div>
+            <div class="doc-item">
+              <span>✓ Background Check</span>
+              <span class="badge verified">Verified</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel">
+        <h2>Account Settings</h2>
+        <label class="toggle-setting">
+          <span>Enable notifications</span>
+          <input type="checkbox" id="notificationsToggle" checked />
+        </label>
+        <label class="toggle-setting">
+          <span>Auto-accept orders</span>
+          <input type="checkbox" id="autoAcceptToggle" />
+        </label>
+      </div>
+    </section>
+  </main>
+
+  <!-- Auth Modal -->
+  <div class="modal-backdrop" id="authModal">
+    <div class="modal">
+      <button class="modal-close" id="authClose">&times;</button>
+      <h2>Login as Driver</h2>
+      <p class="modal-subtitle">Enter phone number to continue</p>
+      <form id="authForm" class="form">
+        <label>
+          Phone Number
+          <input type="tel" id="authPhone" required placeholder="+91 98765 43210" />
+        </label>
+        <button class="btn primary full" type="submit">Continue</button>
+      </form>
+      <p class="form-note">Need to verify? <a href="driver-verify.html">Start Verification</a></p>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <p>© <span id="year"></span> MECH-GO. All rights reserved.</p>
+  </footer>
+
+  <!-- Firebase SDK -->
+  <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-firestore-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-storage-compat.js"></script>
+
+  <!-- Config & Services -->
+  <script src="config.js"></script>
+  <script src="firebase-service.js"></script>
+  <script src="firestore-integration.js"></script>
+  <script>
+    // Wait for Firebase SDK to load from CDN before initializing
+    document.addEventListener('DOMContentLoaded', () => {
+      // Give Firebase CDN scripts time to load
+      setTimeout(() => {
+        if (typeof initializeFirebase === 'function') {
+          try {
+            initializeFirebase();
+          } catch (err) {
+            console.warn('Firebase initialization: ', err.message);
+          }
+        }
+      }, 500);
+    });
+  </script>
+
+  <!-- App -->
+  <script src="navigation.js"></script>
+  <script src="shared.js"></script>
+  <script src="driver.js"></script>
+</body>
+</html>

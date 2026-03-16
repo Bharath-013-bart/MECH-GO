@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MECH-GO | Admin Dashboard</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="top-bar">
+    <div class="logo">
+      <span class="logo-mark">⛽</span>
+      <span class="logo-text">MECH-<span>GO</span></span>
+    </div>
+    <div class="auth-buttons">
+      <button id="logoutBtn" class="btn ghost small">Logout</button>
+    </div>
+  </header>
+
+  <main class="app-main">
+    <div class="section-header">
+      <h1>👮 Admin Dashboard</h1>
+      <p>Review and approve driver & mechanic verifications</p>
+    </div>
+
+    <div class="admin-tabs">
+      <button class="admin-tab active" data-tab="drivers">
+        <span class="badge-count" id="driverCount">0</span> Drivers Pending
+      </button>
+      <button class="admin-tab" data-tab="mechanics">
+        <span class="badge-count" id="mechanicCount">0</span> Mechanics Pending
+      </button>
+      <button class="admin-tab" data-tab="approved">
+        ✓ Approved Users
+      </button>
+    </div>
+
+    <!-- Drivers Tab -->
+    <section id="driversTab" class="admin-tab-content">
+      <div id="driversList" class="verification-list">
+        <div class="empty-state">No pending driver verifications</div>
+      </div>
+    </section>
+
+    <!-- Mechanics Tab -->
+    <section id="mechanicsTab" class="admin-tab-content hidden">
+      <div id="mechanicsList" class="verification-list">
+        <div class="empty-state">No pending mechanic verifications</div>
+      </div>
+    </section>
+
+    <!-- Approved Users Tab -->
+    <section id="approvedTab" class="admin-tab-content hidden">
+      <div class="admin-tabs-sub">
+        <button class="admin-tab-sub active" data-subtab="approved-drivers">Approved Drivers</button>
+        <button class="admin-tab-sub" data-subtab="approved-mechanics">Approved Mechanics</button>
+      </div>
+
+      <div id="approvedDriversSection" class="admin-subtab-content">
+        <div id="approvedDriversList" class="verification-list">
+          <div class="empty-state">No approved drivers yet</div>
+        </div>
+      </div>
+
+      <div id="approvedMechanicsSection" class="admin-subtab-content hidden">
+        <div id="approvedMechanicsList" class="verification-list">
+          <div class="empty-state">No approved mechanics yet</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Verification Detail Modal -->
+    <div id="detailModal" class="modal-backdrop hidden">
+      <div class="modal large">
+        <button class="modal-close" id="detailClose">&times;</button>
+        
+        <div class="verification-detail">
+          <h2 id="detailName"></h2>
+          <p id="detailRole"></p>
+
+          <div class="detail-section">
+            <h3>Personal Information</h3>
+            <div class="detail-grid">
+              <div>
+                <label>Phone</label>
+                <p id="detailPhone"></p>
+              </div>
+              <div>
+                <label>Submitted At</label>
+                <p id="detailSubmittedAt"></p>
+              </div>
+            </div>
+          </div>
+
+          <div class="detail-section">
+            <h3>Documents</h3>
+            <div id="detailDocuments" class="documents-grid"></div>
+          </div>
+
+          <div id="detailExtra" class="detail-section"></div>
+
+          <div class="verification-actions">
+            <button id="approveBtn" class="btn primary">✓ Approve</button>
+            <button id="rejectBtn" class="btn danger">✗ Reject</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <p>© <span id="year"></span> MECH-GO Admin Dashboard. All rights reserved.</p>
+  </footer>
+
+  <!-- Firebase SDK -->
+  <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-firestore-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-storage-compat.js"></script>
+
+  <!-- Config & Services -->
+  <script src="config.js"></script>
+  <script src="firebase-service.js"></script>
+  <script src="firestore-integration.js"></script>
+  <script>
+    // Wait for Firebase SDK to load from CDN before initializing
+    document.addEventListener('DOMContentLoaded', () => {
+      // Give Firebase CDN scripts time to load
+      setTimeout(() => {
+        if (typeof initializeFirebase === 'function') {
+          try {
+            initializeFirebase();
+          } catch (err) {
+            console.warn('Firebase initialization: ', err.message);
+          }
+        }
+      }, 500);
+    });
+  </script>
+
+  <!-- App -->
+  <script src="navigation.js"></script>
+  <script src="shared.js"></script>
+  <script src="admin.js"></script>
+</body>
+</html>

@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MECH-GO | Customer Dashboard</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="top-bar">
+    <div class="logo">
+      <span class="logo-mark">⛽</span>
+      <span class="logo-text">MECH-<span>GO</span></span>
+    </div>
+    <nav class="nav-links">
+      <button id="homeBtn" class="nav-link-btn" >Home</button>
+      <button id="ordersBtn" class="nav-link-btn active">Active Orders</button>
+      <button id="historyBtn" class="nav-link-btn">History</button>
+    </nav>
+    <div class="auth-buttons">
+      <span id="userGreeting" class="user-greeting"></span>
+      <button id="logoutBtn" class="btn ghost small">Logout</button>
+    </div>
+  </header>
+
+  <main class="app-main">
+    <!-- Home Section -->
+    <section id="homeSection" class="app-section hidden">
+      <div class="section-header">
+        <h1>Welcome back, <span id="customerName"></span>!</h1>
+        <p>Need fuel or mechanical help? Let's get you sorted.</p>
+      </div>
+      <div class="quick-cards">
+        <button id="requestFuelBtn" class="quick-card">
+          <span class="card-icon">⛽</span>
+          <h3>Request Fuel Delivery</h3>
+          <p>Get fuel delivered to your location</p>
+        </button>
+        <button id="requestMechanicBtn" class="quick-card">
+          <span class="card-icon">🔧</span>
+          <h3>Book a Mechanic</h3>
+          <p>Get immediate mechanical help</p>
+        </button>
+      </div>
+    </section>
+
+    <!-- Active Orders Section -->
+    <section id="ordersSection" class="app-section">
+      <div class="section-header">
+        <h1>Active Orders</h1>
+      </div>
+
+      <!-- Request Fuel Form -->
+      <div class="panel form-panel">
+        <h2>Request Fuel Delivery</h2>
+        <form id="fuelOrderForm" class="form">
+          <div class="form-row">
+            <label>
+              Vehicle / Generator
+              <input type="text" id="vehicle" required placeholder="Car - KA 01 AB 1234" />
+            </label>
+            <label>
+              Location
+              <input type="text" id="location" required placeholder="Drop a pin or address" />
+            </label>
+          </div>
+
+          <div class="form-row">
+            <label>
+              Fuel Type
+              <select id="fuelType" required>
+                <option value="petrol">Petrol</option>
+                <option value="diesel">Diesel</option>
+              </select>
+            </label>
+            <label>
+              Quantity (L)
+              <input type="number" id="quantity" min="1" max="1000" required placeholder="20" />
+            </label>
+          </div>
+
+          <label>
+            Notes to driver (parking, landmarks, etc.)
+            <textarea id="notes" rows="2" placeholder="Parking details, landmarks, special instructions..."></textarea>
+          </label>
+
+          <button class="btn primary full" type="submit">Place Order</button>
+        </form>
+      </div>
+
+      <!-- Active Orders List -->
+      <div class="panel">
+        <h2>Your Orders</h2>
+        <div id="activeOrdersList" class="orders-list">
+          <div class="empty-state">No active orders. Place one to see details here.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Order Tracking & Chat -->
+    <section id="trackingSection" class="app-section hidden">
+      <div class="section-header">
+        <h1>Track Your Order</h1>
+        <button id="backToOrdersBtn" class="btn ghost">← Back to Orders</button>
+      </div>
+
+      <div class="tracking-container">
+        <div class="panel tracking-panel">
+          <h2>Order Details</h2>
+          <div id="orderDetails" class="order-details"></div>
+          
+          <div class="tracking-status">
+            <h3>Status Timeline</h3>
+            <div id="statusTimeline" class="timeline"></div>
+          </div>
+        </div>
+
+        <div class="panel chat-panel">
+          <div class="chat-header">
+            <h3>Chat with <span id="driverName">Driver</span></h3>
+            <span id="chatStatus" class="badge offline">Offline</span>
+          </div>
+          <div id="chatMessages" class="chat-messages"></div>
+          <form id="chatForm" class="chat-input-row">
+            <input type="text" id="chatInput" placeholder="Type a message..." autocomplete="off" />
+            <button class="btn primary small" type="submit">Send</button>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <!-- History Section -->
+    <section id="historySection" class="app-section hidden">
+      <div class="section-header">
+        <h1>Order History</h1>
+      </div>
+
+      <div class="panel">
+        <div id="orderHistory" class="history-list">
+          <div class="empty-state">No completed orders yet.</div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Auth Modal -->
+  <div class="modal-backdrop" id="authModal">
+    <div class="modal">
+      <button class="modal-close" id="authClose">&times;</button>
+      <h2>Login to MECH-GO</h2>
+      <p class="modal-subtitle">Enter your details to continue as a customer.</p>
+      <form id="authForm" class="form">
+        <label>
+          Username
+          <input type="text" id="authUsername" required placeholder="e.g. john_doe" />
+        </label>
+        <label>
+          Phone Number
+          <input type="tel" id="authPhone" required placeholder="+91 98765 43210" />
+        </label>
+        <button class="btn primary full" type="submit">Continue</button>
+      </form>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <p>© <span id="year"></span> MECH-GO. All rights reserved.</p>
+  </footer>
+
+  <!-- Firebase SDK -->
+  <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-firestore-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-storage-compat.js"></script>
+
+  <!-- Config & Services -->
+  <script src="config.js"></script>
+  <script src="firebase-service.js"></script>
+  <script src="firestore-integration.js"></script>
+  <script>
+    // Wait for Firebase SDK to load from CDN before initializing
+    document.addEventListener('DOMContentLoaded', () => {
+      // Give Firebase CDN scripts time to load
+      setTimeout(() => {
+        if (typeof initializeFirebase === 'function') {
+          try {
+            initializeFirebase();
+          } catch (err) {
+            console.warn('Firebase initialization: ', err.message);
+          }
+        }
+      }, 500);
+    });
+  </script>
+
+  <!-- App -->
+  <script src="navigation.js"></script>
+  <script src="shared.js"></script>
+  <script src="customer.js"></script>
+</body>
+</html>

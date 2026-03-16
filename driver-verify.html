@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MECH-GO | Driver Verification</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="top-bar">
+    <div class="logo">
+      <span class="logo-mark">⛽</span>
+      <span class="logo-text">MECH-<span>GO</span></span>
+    </div>
+  </header>
+
+  <main class="app-main">
+    <div class="verification-container">
+      <!-- Step 1: Phone Verification -->
+      <section id="phoneVerificationStep" class="verification-step">
+        <div class="verification-card">
+          <h1>📱 Verify Your Phone</h1>
+          <p>We'll send an OTP to verify your phone number</p>
+          
+          <form id="phoneForm" class="form">
+            <label>
+              Phone Number
+              <input type="tel" id="phoneInput" required placeholder="+91 98765 43210" />
+            </label>
+            <button class="btn primary full" type="submit">Send OTP</button>
+          </form>
+          
+          <p class="form-note">Already verified? <a href="driver.html">Go to Dashboard</a></p>
+        </div>
+      </section>
+
+      <!-- Step 2: OTP Verification -->
+      <section id="otpVerificationStep" class="verification-step hidden">
+        <div class="verification-card">
+          <h1>✓ Enter OTP</h1>
+          <p id="otpPhone"></p>
+          
+          <form id="otpForm" class="form">
+            <label>
+              6-Digit OTP
+              <input type="text" id="otpInput" placeholder="123456" maxlength="6" required />
+            </label>
+            <small class="form-note">Check SMS / console for OTP code</small>
+            
+            <button class="btn primary full" type="submit">Verify OTP</button>
+            <button class="btn ghost full" id="resendOtpBtn" type="button">Resend OTP</button>
+          </form>
+        </div>
+      </section>
+
+      <!-- Step 3: Document Upload -->
+      <section id="documentUploadStep" class="verification-step hidden">
+        <div class="verification-card">
+          <h1>📄 Upload Documents</h1>
+          <p>Submit your documents for verification (admin will review)</p>
+          
+          <form id="documentForm" class="form">
+            <div class="document-upload-group">
+              <label class="document-upload">
+                <span class="doc-icon">🪪</span>
+                <span class="doc-title">Driver's License</span>
+                <input type="file" id="licenseFile" accept="image/*" required />
+                <span class="file-status" id="licenseStatus">Click to upload</span>
+              </label>
+            </div>
+
+            <div class="document-upload-group">
+              <label class="document-upload">
+                <span class="doc-icon">🚗</span>
+                <span class="doc-title">Vehicle Registration</span>
+                <input type="file" id="registrationFile" accept="image/*" required />
+                <span class="file-status" id="registrationStatus">Click to upload</span>
+              </label>
+            </div>
+
+            <div class="document-upload-group">
+              <label class="document-upload">
+                <span class="doc-icon">📸</span>
+                <span class="doc-title">Selfie with ID</span>
+                <input type="file" id="selfieFile" accept="image/*" required />
+                <span class="file-status" id="selfieStatus">Click to upload</span>
+              </label>
+            </div>
+
+            <label>
+              Bank Account Number (for payouts)
+              <input type="text" id="bankAccount" placeholder="IBAN or Account Number" required />
+            </label>
+
+            <div class="checkbox-label">
+              <input type="checkbox" id="agreeCheckbox" required />
+              <span>I agree to the terms and conditions</span>
+            </div>
+
+            <button class="btn primary full" type="submit">Submit for Verification</button>
+          </form>
+          
+          <p class="form-note">
+            ⏳ Your documents will be reviewed by our team within 24 hours. You'll receive a notification once approved.
+          </p>
+        </div>
+      </section>
+
+      <!-- Step 4: Pending Approval -->
+      <section id="pendingApprovalStep" class="verification-step hidden">
+        <div class="verification-card pending">
+          <h1>⏳ Documents Submitted</h1>
+          <div class="pending-content">
+            <p style="font-size: 3rem; margin: 0;">📋</p>
+            <p><strong>Your documents are under review</strong></p>
+            <p style="color: var(--muted);">Our team will verify your documents within 24 hours</p>
+            
+            <div class="approval-timeline">
+              <div class="timeline-step completed">
+                <span class="step-icon">✓</span>
+                <span class="step-label">Phone Verified</span>
+              </div>
+              <div class="timeline-step active">
+                <span class="step-icon">2</span>
+                <span class="step-label">Admin Review</span>
+              </div>
+              <div class="timeline-step">
+                <span class="step-icon">3</span>
+                <span class="step-label">Approved</span>
+              </div>
+            </div>
+
+            <a href="driver.html" class="btn ghost full">Go to Dashboard</a>
+            <p class="form-note">You can still use the app while waiting for approval</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Already Verified -->
+      <section id="alreadyVerifiedStep" class="verification-step hidden">
+        <div class="verification-card success">
+          <h1>✅ Verified!</h1>
+          <div class="verified-content">
+            <p style="font-size: 3rem; margin: 0;">🎉</p>
+            <p><strong>You're all set!</strong></p>
+            <p style="color: var(--muted);">Your account is verified and ready to accept orders</p>
+            
+            <a href="driver.html" class="btn primary full">Go to Dashboard</a>
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <p>© <span id="year"></span> MECH-GO. All rights reserved.</p>
+  </footer>
+
+  <!-- Navigation -->
+  <script src="navigation.js"></script>
+  
+  <!-- Firebase SDK (compat for namespaced API) -->
+  <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-firestore-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-storage-compat.js"></script>
+
+  <!-- reCAPTCHA for phone auth -->
+  <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+  <div id="recaptcha-container"></div>
+
+  <!-- Config & Services -->
+  <script src="config.js"></script>
+  <script src="firebase-service.js"></script>
+  <script src="firestore-integration.js"></script>
+  <script>
+    // Wait for Firebase SDK to load from CDN before initializing
+    document.addEventListener('DOMContentLoaded', () => {
+      // Give Firebase CDN scripts time to load
+      setTimeout(() => {
+        if (typeof initializeFirebase === 'function') {
+          try {
+            initializeFirebase();
+          } catch (err) {
+            console.warn('Firebase initialization: ', err.message);
+          }
+        }
+      }, 500);
+    });
+  </script>
+
+  <!-- App -->
+  <script src="shared.js"></script>
+  <script src="driver-verify.js"></script>
+</body>
+</html>

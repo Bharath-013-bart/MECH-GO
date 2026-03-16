@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MECH-GO | On-Demand Fuel Delivery</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="top-bar">
+    <div class="logo">
+      <span class="logo-mark">⛽</span>
+      <span class="logo-text">MECH-<span>GO</span></span>
+    </div>
+    <nav class="nav-links">
+      <a href="#hero">Home</a>
+      <a href="#how-it-works">How it works</a>
+      <a href="#services">Services</a>
+      <a href="#pricing">Pricing</a>
+      <a href="#contact">Contact</a>
+    </nav>
+    <div class="auth-buttons">
+      <button id="loginCustomerBtn" class="btn ghost">Customer</button>
+      <button id="loginDriverBtn" class="btn ghost">Driver</button>
+      <button id="loginMechanicBtn" class="btn ghost">Mechanic</button>
+      <button id="loginAdminBtn" class="btn primary">Admin</button>
+    </div>
+    <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation">
+      <span></span><span></span><span></span>
+    </button>
+  </header>
+
+  <main>
+    <!-- Landing / Hero -->
+    <section id="hero" class="hero section">
+      <div class="hero-content">
+        <h1>Fuel delivered to your vehicle, <span>anytime</span>, anywhere.</h1>
+        <p>
+          MECH-GO brings fuel directly to your car, bike, generator, or fleet.
+          No more long queues, no more late-night fuel hunts.
+        </p>
+        <div class="hero-actions">
+          <button id="primaryBookNow" class="btn primary large">Book fuel delivery</button>
+          <button id="secondaryFleetBtn" class="btn ghost large">Talk to fleet specialist</button>
+        </div>
+        <div class="hero-stats">
+          <div>
+            <span class="stat-number">10k+</span>
+            <span class="stat-label">Liters delivered</span>
+          </div>
+          <div>
+            <span class="stat-number">24/7</span>
+            <span class="stat-label">On-demand support</span>
+          </div>
+          <div>
+            <span class="stat-number">99%</span>
+            <span class="stat-label">On-time delivery</span>
+          </div>
+        </div>
+      </div>
+      <div class="hero-card">
+        <h2>Instant Fuel Request</h2>
+        <form id="quickRequestForm" class="form">
+          <label>
+            Name
+            <input type="text" id="qrName" required placeholder="John Doe" />
+          </label>
+          <label>
+            Location / Pin
+            <input type="text" id="qrLocation" required placeholder="Share your location or PIN" />
+          </label>
+          <div class="grid two">
+            <label>
+              Fuel type
+              <select id="qrFuelType" required>
+                <option value="petrol">Petrol</option>
+                <option value="diesel">Diesel</option>
+              </select>
+            </label>
+            <label>
+              Quantity (L)
+              <input type="number" id="qrQuantity" min="1" max="1000" required placeholder="20" />
+            </label>
+          </div>
+          <label>
+            Preferred time
+            <input type="datetime-local" id="qrTime" />
+          </label>
+          <button class="btn primary full" type="submit">Request now</button>
+          <p class="form-note">We’ll confirm via SMS / WhatsApp once a driver accepts.</p>
+        </form>
+      </div>
+    </section>
+
+    <!-- How it works -->
+    <section id="how-it-works" class="section">
+      <h2 class="section-title">How MECH-GO works</h2>
+      <div class="steps">
+        <div class="step">
+          <span class="step-number">01</span>
+          <h3>Place your order</h3>
+          <p>Enter your location, choose fuel type and quantity, and submit a request in seconds.</p>
+        </div>
+        <div class="step">
+          <span class="step-number">02</span>
+          <h3>Driver is assigned</h3>
+          <p>Nearby MECH-GO delivery partners receive your request and accept the job.</p>
+        </div>
+        <div class="step">
+          <span class="step-number">03</span>
+          <h3>Live chat & tracking</h3>
+          <p>Chat directly with your delivery partner and track ETA inside the app.</p>
+        </div>
+        <div class="step">
+          <span class="step-number">04</span>
+          <h3>Safe refuel & pay</h3>
+          <p>We refuel safely at your spot, and you pay securely after delivery.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Services -->
+    <section id="services" class="section">
+      <h2 class="section-title">Built for every need</h2>
+      <div class="cards">
+        <article class="card">
+          <h3>Emergency roadside refuel</h3>
+          <p>Stranded with low fuel? Request MECH-GO and we’ll dispatch a nearby delivery partner immediately.</p>
+          <ul>
+            <li>Cars & bikes</li>
+            <li>Breakdown-safe process</li>
+            <li>Live chat with driver</li>
+          </ul>
+        </article>
+        <article class="card">
+          <h3>Generators & backup power</h3>
+          <p>Keep your generators running for homes, events, and businesses with scheduled refills.</p>
+          <ul>
+            <li>Recurring schedules</li>
+            <li>Usage analytics (coming soon)</li>
+            <li>Priority support</li>
+          </ul>
+        </article>
+        <article class="card">
+          <h3>Fleets & logistics</h3>
+          <p>Optimize fueling for trucks, buses, and delivery fleets with night-time refueling.</p>
+          <ul>
+            <li>Bulk pricing</li>
+            <li>Driver-level tracking</li>
+            <li>Centralized billing</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <!-- Pricing -->
+    <section id="pricing" class="section">
+      <h2 class="section-title">Transparent pricing</h2>
+      <div class="pricing-grid">
+        <div class="price-card">
+          <h3>On-demand</h3>
+          <p class="price-label">Pump price + delivery fee</p>
+          <ul>
+            <li>Ideal for emergencies</li>
+            <li>Delivery fee based on distance</li>
+            <li>No subscription required</li>
+          </ul>
+          <button class="btn ghost full">Estimate my cost</button>
+        </div>
+        <div class="price-card featured">
+          <h3>Business & fleets</h3>
+          <p class="price-label">Custom monthly plans</p>
+          <ul>
+            <li>Discounted fuel pricing</li>
+            <li>Dedicated account manager</li>
+            <li>Consolidated invoicing</li>
+          </ul>
+          <button class="btn primary full">Book a call</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact / CTA -->
+    <section id="contact" class="section">
+      <h2 class="section-title">Talk to MECH-GO</h2>
+      <div class="contact-grid">
+        <div>
+          <p>
+            Have a question about safety, coverage, or fleet pricing? Reach out and our team will guide you.
+          </p>
+          <div class="contact-actions">
+            <a href="tel:+1000000000" class="btn primary">Call support</a>
+            <a href="#" class="btn ghost">Chat on WhatsApp</a>
+          </div>
+          <ul class="contact-list">
+            <li><span>Support:</span> support@mech-go.com</li>
+            <li><span>Business:</span> fleet@mech-go.com</li>
+            <li><span>Hours:</span> 24/7 in active cities</li>
+          </ul>
+        </div>
+        <form id="contactForm" class="form">
+          <label>
+            Name
+            <input type="text" id="cName" required />
+          </label>
+          <label>
+            Email
+            <input type="email" id="cEmail" required />
+          </label>
+          <label>
+            How can we help?
+            <textarea id="cMessage" rows="4" required></textarea>
+          </label>
+          <button class="btn primary full" type="submit">Send message</button>
+        </form>
+      </div>
+    </section>
+
+    <!-- App UI: Auth & Dashboards -->
+    <section id="app" class="section app-section hidden">
+      <div class="app-header">
+        <h2 id="appTitle">MECH-GO App</h2>
+        <div class="app-role-switch">
+          <button class="chip active" data-role="customer">Customer</button>
+          <button class="chip" data-role="driver">Delivery partner</button>
+        </div>
+        <button id="logoutBtn" class="btn ghost small">Logout</button>
+      </div>
+
+      <!-- Customer dashboard -->
+      <div id="customerDashboard" class="dashboard">
+        <div class="dashboard-grid">
+          <div class="panel">
+            <h3>Request fuel</h3>
+            <form id="customerOrderForm" class="form compact">
+              <label>
+                Vehicle / Generator
+                <input type="text" id="coVehicle" required placeholder="Car - KA 01 AB 1234" />
+              </label>
+              <label>
+                Location
+                <input type="text" id="coLocation" required placeholder="Drop a pin or address" />
+              </label>
+              <div class="grid two">
+                <label>
+                  Fuel type
+                  <select id="coFuelType" required>
+                    <option value="petrol">Petrol</option>
+                    <option value="diesel">Diesel</option>
+                  </select>
+                </label>
+                <label>
+                  Quantity (L)
+                  <input type="number" id="coQuantity" min="1" required />
+                </label>
+              </div>
+              <label>
+                Notes to driver
+                <textarea id="coNotes" rows="2" placeholder="Landmarks, parking details, etc."></textarea>
+              </label>
+              <button class="btn primary full" type="submit">Place order</button>
+            </form>
+          </div>
+          <div class="panel">
+            <h3>Your active order</h3>
+            <div id="customerActiveOrder" class="empty-state">
+              No active order yet. Place one to see details here.
+            </div>
+          </div>
+        </div>
+        <div class="panel chat-panel">
+          <div class="chat-header">
+            <h3>Chat with your delivery partner</h3>
+            <span id="chatStatus" class="badge">Offline</span>
+          </div>
+          <div id="chatMessages" class="chat-messages"></div>
+          <form id="chatForm" class="chat-input-row">
+            <input type="text" id="chatInput" placeholder="Type a message..." autocomplete="off" />
+            <button class="btn primary small" type="submit">Send</button>
+          </form>
+        </div>
+      </div>
+
+      <!-- Driver dashboard -->
+      <div id="driverDashboard" class="dashboard hidden">
+        <div class="dashboard-grid">
+          <div class="panel">
+            <h3>Available request</h3>
+            <div id="driverActiveOrder" class="empty-state">
+              Waiting for new customer requests...
+            </div>
+            <button id="driverAcceptBtn" class="btn primary full hidden">Accept & start</button>
+          </div>
+          <div class="panel">
+            <h3>Status updates</h3>
+            <div class="status-toggles">
+              <button class="chip" data-status="on-the-way">On the way</button>
+              <button class="chip" data-status="arrived">Arrived</button>
+              <button class="chip" data-status="completed">Completed</button>
+            </div>
+          </div>
+        </div>
+        <div class="panel chat-panel">
+          <div class="chat-header">
+            <h3>Chat with customer</h3>
+            <span id="driverChatStatus" class="badge">Offline</span>
+          </div>
+          <div id="driverChatMessages" class="chat-messages"></div>
+          <form id="driverChatForm" class="chat-input-row">
+            <input type="text" id="driverChatInput" placeholder="Type a message..." autocomplete="off" />
+            <button class="btn primary small" type="submit">Send</button>
+          </form>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Auth Modal -->
+  <div class="modal-backdrop hidden" id="authModal">
+    <div class="modal">
+      <button class="modal-close" id="authClose">&times;</button>
+      <h2 id="authTitle">Login to MECH-GO</h2>
+      <p class="modal-subtitle" id="authSubtitle">Choose a simple username to continue.</p>
+      <form id="authForm" class="form">
+        <label>
+          Username / Phone
+          <input type="text" id="authUsername" required placeholder="e.g. john_customer" />
+        </label>
+        <label>
+          Role
+          <select id="authRole" required>
+            <option value="customer">Customer</option>
+            <option value="driver">Delivery Partner</option>
+            <option value="mechanic">Mechanic</option>
+            <option value="admin">Admin (Password)</option>
+          </select>
+        </label>
+        <button class="btn primary full" type="submit">Continue</button>
+      </form>
+      <p class="form-note" id="adminNote" style="display:none; color: var(--accent-gold);">🔐 Admin access requires password verification.</p>
+      <p class="modal-note" id="adminLoginNote" style="display:none;">
+        Default password: <strong>admin123</strong>
+      </p>
+      <p class="modal-note">
+        This demo stores your session and chat locally in this browser only. For a real deployment, connect to a backend.
+      </p>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <p>© <span id="year"></span> MECH-GO. All rights reserved.</p>
+    <p class="footer-sub">Built with a dark, techy heart and a touch of royal gold.</p>
+  </footer>
+
+  <script src="navigation.js"></script>
+  <script src="shared.js"></script>
+  <script src="index.js"></script>
+</body>
+</html>
+
